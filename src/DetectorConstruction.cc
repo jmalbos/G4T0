@@ -132,15 +132,7 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   reflector_os->SetSigmaAlpha(0.01);
   new G4LogicalSkinSurface("Reflector", reflector_logic, reflector_os);
 
-  //
-  // Photon detector optical surface
-  //
-  G4OpticalSurface *phdet_os = new G4OpticalSurface("phdetOpticalSurface");
-  phdet_os->SetModel(unified);
-  phdet_os->SetType(dielectric_metal);
-  phdet_os->SetFinish(polished);
-  new G4LogicalSkinSurface("PhDet", phdet_logic, phdet_os);
-
+ 
   // ------------- Material properties --------------
   //
   // Photon energy
@@ -199,12 +191,21 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   reflector_mat->SetMaterialPropertiesTable(myMPT2);
 
   //
+  // Photon detector optical surface
+  //
+  //
   // Photon detector MPT3
   //
   auto myMPT3 = new G4MaterialPropertiesTable();
   myMPT3->AddProperty("REFLECTIVITY", photonenergy, reflectivity_2);
   myMPT3->AddProperty("EFFICIENCY", photonenergy, efficiency);
-  phdet_mat->SetMaterialPropertiesTable(myMPT3);
 
+  G4OpticalSurface *phdet_os = new G4OpticalSurface("phdetOpticalSurface");
+  phdet_os->SetModel(unified);
+  phdet_os->SetType(dielectric_metal);
+  phdet_os->SetFinish(polished);
+  phdet_os->SetMaterialPropertiesTable(myMPT3);
+  new G4LogicalSkinSurface("PhDet", phdet_logic, phdet_os);
+ 
   return physWorld;
 }
