@@ -34,14 +34,17 @@
 #
 # Draw geometry:
 /vis/drawVolume
-/vis/geometry/set/colour
+/vis/geometry/set/colour Gas 4 4 4 0.2 0.2
+/vis/geometry/set/colour Reflector 1 0 0 0.4 0.4
+/vis/geometry/set/colour PhDet 0 0 1 0.4 0.4
+
 #
 # Specify view angle:
 /vis/viewer/set/viewpointVector -1 0 0
 /vis/viewer/set/lightsVector -1 0 0
 #
 # Specify style (surface, wireframe, auxiliary edges,...)
-/vis/viewer/set/style wireframe
+/vis/viewer/set/style surface
 /vis/viewer/set/auxiliaryEdge true
 /vis/viewer/set/lineSegmentsPerCircle 100
 #
@@ -110,9 +113,7 @@
 # Make the "World" box invisible
 /vis/geometry/set/visibility World 0 false
 # "Envelope" is transparent blue to represent water
-#/vis/geometry/set/colour plane 4 4 4 0.2 0.2
-#/vis/geometry/set/colour board 0 0 1
-#/vis/viewer/set/style surface
+
 #/vis/viewer/set/hiddenMarker true
 #/vis/viewer/set/viewpointThetaPhi 120 150
 #
