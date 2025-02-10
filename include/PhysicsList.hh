@@ -1,15 +1,7 @@
-
-//
-/// \file B3/B3a/include/PhysicsList.hh
-/// \brief Definition of the B3::PhysicsList class
-
-#ifndef B3PhysicsList_h
-#define B3PhysicsList_h 1
+#ifndef PHYSICS_LIST_HH
+#define PHYSICS_LIST_HH
 
 #include "G4VModularPhysicsList.hh"
-
-namespace B1
-{
 
 /// Modular physics list
 ///
@@ -20,15 +12,11 @@ namespace B1
 
 class PhysicsList : public G4VModularPhysicsList
 {
-  public:
-    PhysicsList();
-    ~PhysicsList() override = default;
+public:
+  PhysicsList();
+  ~PhysicsList() override = default;
 
-    void SetCuts() override;
+  void SetCuts() override;
 };
-
-}  // namespace B1
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif

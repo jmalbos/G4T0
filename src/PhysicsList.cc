@@ -1,17 +1,10 @@
-
-/// \file B3/B3a/src/PhysicsList.cc
-/// \brief Implementation of the B3::PhysicsList class
-
 #include "PhysicsList.hh"
 
-#include "G4DecayPhysics.hh"
-#include "G4EmStandardPhysics.hh"
-#include "G4RadioactiveDecayPhysics.hh"
+#include <G4DecayPhysics.hh>
+#include <G4EmStandardPhysics.hh>
+#include <G4RadioactiveDecayPhysics.hh>
+#include <G4OpticalPhysics.hh>
 
-namespace B1
-{
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PhysicsList::PhysicsList()
 {
@@ -25,15 +18,12 @@ PhysicsList::PhysicsList()
 
   // Radioactive decay
   RegisterPhysics(new G4RadioactiveDecayPhysics());
-}
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  // Optical physics
+  RegisterPhysics(new G4OpticalPhysics());
+}
 
 void PhysicsList::SetCuts()
 {
   G4VUserPhysicsList::SetCuts();
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-}  // namespace B1

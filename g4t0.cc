@@ -1,5 +1,6 @@
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
+#include "PhysicsList.hh"
 
 #include "G4RunManager.hh"
 #include "G4SteppingVerbose.hh"
@@ -29,7 +30,8 @@ int main(int argc, char **argv)
   runManager->SetUserInitialization(new DetectorConstruction());
 
   // Physics list
-  auto physicsList = new QBBC;
+  //auto physicsList = new QBBC;
+  auto physicsList = new PhysicsList();
   physicsList->SetVerboseLevel(1);
   runManager->SetUserInitialization(physicsList);
 
