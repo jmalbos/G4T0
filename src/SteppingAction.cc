@@ -65,6 +65,9 @@ void SteppingAction::UserSteppingAction(const G4Step *step)
         {
             G4String detector_name = step->GetPostStepPoint()->GetTouchableHandle()->GetVolume()->GetName();
             G4cout << "##### DETECTED: " << detector_name << G4endl;
+
+            G4ThreeVector position = step -> GetPostStepPoint()->GetPosition();
+            G4cout << position << G4endl;
         }
     }
 
