@@ -46,17 +46,17 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   //
   // Argon gas
   //
-  G4double gas_diam = 250. * mm;
+  G4double gas_outerdiam = 250. * mm;
   G4double gas_length = 270. * mm;
   G4Material *gas_mat = nist->FindOrBuildMaterial("G4_Ar");
   G4ThreeVector gas_pos = G4ThreeVector();
 
-  auto gas_solid = new G4Tubs("Gas",           // name
-                              0.,              // inner radius
-                              gas_diam / 2.,   // outer radius
-                              gas_length / 2., // length
-                              0.,              // start phi angle
-                              360. * deg);     // final phi angle
+  auto gas_solid = new G4Tubs("Gas",                // name
+                              0.,                   // inner diametre
+                              gas_outerdiam / 2.,   // outer diametre
+                              gas_length / 2.,      // length
+                              0.,                   // start phi angle
+                              360. * deg);          // final phi angle
 
   auto gas_logic = new G4LogicalVolume(gas_solid, gas_mat, "Gas");
 
@@ -79,8 +79,8 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   G4ThreeVector reflector_pos = G4ThreeVector();
 
   auto reflector_solid = new G4Tubs("Reflector",              // name
-                                    reflector_innerdiam / 2., // inner radius
-                                    reflector_outerdiam / 2., // outer radius
+                                    reflector_innerdiam / 2., // inner diametre
+                                    reflector_outerdiam / 2., // outer diametre
                                     reflector_length / 2.,    // length
                                     0.,                       // start phi angle
                                     360. * deg);              // final phi angle
@@ -121,18 +121,6 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
                     0,              // copy number
                     checkOverlaps); // overlaps checking
 
-  // ------------- Optical surfaces --------------
-  //
-  // Reflector optical surface
-  //
-  G4OpticalSurface *reflector_os = new G4OpticalSurface("reflectorOpticalSurface");
-  reflector_os->SetModel(unified);
-  reflector_os->SetType(dielectric_metal);
-  reflector_os->SetFinish(ground);
-  reflector_os->SetSigmaAlpha(0.01);
-  new G4LogicalSkinSurface("Reflector", reflector_logic, reflector_os);
-
- 
   // ------------- Material properties --------------
   //
   // Photon energy
@@ -180,7 +168,7 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   gas_mat->SetMaterialPropertiesTable(myMPT1);
 
   //
-  // Reflector MPT2
+  // Reflector MPT2 and optical surface
   //
   auto myMPT2 = new G4MaterialPropertiesTable();
   myMPT2->AddProperty("SPECULARLOBECONSTANT", photonenergy, specularlobe);
@@ -188,13 +176,17 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   myMPT2->AddProperty("BACKSCATTERCONSTANT", photonenergy, backscatter);
   myMPT2->AddProperty("RINDEX", photonenergy, refractiveindex_2);
   myMPT2->AddProperty("REFLECTIVITY", photonenergy, reflectivity);
-  reflector_mat->SetMaterialPropertiesTable(myMPT2);
+
+  G4OpticalSurface *reflector_os = new G4OpticalSurface("reflectorOpticalSurface");
+  reflector_os->SetModel(unified);
+  reflector_os->SetType(dielectric_metal);
+  reflector_os->SetFinish(ground);
+  reflector_os->SetSigmaAlpha(0.01);
+  reflector_os->SetMaterialPropertiesTable(myMPT2);
+  new G4LogicalSkinSurface("Reflector", reflector_logic, reflector_os);
 
   //
-  // Photon detector optical surface
-  //
-  //
-  // Photon detector MPT3
+  // Photon detector MPT3 and optical surface
   //
   auto myMPT3 = new G4MaterialPropertiesTable();
   myMPT3->AddProperty("REFLECTIVITY", photonenergy, reflectivity_2);
