@@ -21,16 +21,8 @@
 
     G4ParticleDefinition *particleDefinition = G4ParticleTable::GetParticleTable()->FindParticle("opticalphoton");
 
-    G4double cosTheta = 2 * G4UniformRand() - 1., phi = 2 * CLHEP::pi * G4UniformRand();
-    G4double sinTheta = std::sqrt(1. - cosTheta * cosTheta);
-    G4double x0 = sinTheta * std::cos(phi), y0 = sinTheta * std::sin(phi), z0 = cosTheta;
-
-    // fParticleGun->SetParticleMomentumDirection(G4ThreeVector(x0, y0, z0));
-    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0., 0., 1.));
-
     fParticleGun->SetParticleDefinition(particleDefinition);
     fParticleGun->SetParticleEnergy(2.0 * eV);
-    fParticleGun->SetNumberOfParticles(1);
     fParticleGun->SetParticlePosition(G4ThreeVector());
   }
 
@@ -67,6 +59,12 @@
 
     // Starting a primary particle close to the world boundary.
     //
+
+    G4double cosTheta = 2 * G4UniformRand() - 1., phi = 2 * CLHEP::pi * G4UniformRand();
+    G4double sinTheta = std::sqrt(1. - cosTheta * cosTheta);
+    G4double x0 = sinTheta * std::cos(phi), y0 = sinTheta * std::sin(phi), z0 = cosTheta;
+
+    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(x0, y0, z0));
 
     G4cout << "fParticleGun->GeneratePrimaryVertex(anEvent);" << G4endl;
 
