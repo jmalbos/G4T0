@@ -11,9 +11,19 @@
 #include <G4OpBoundaryProcess.hh>
 #include <G4VPhysicalVolume.hh>
 
+
+
 SteppingAction::SteppingAction()
 {
+    output_file_.open("output.txt", std::ofstream::out);
 }
+
+
+SteppingAction::~SteppingAction()
+{
+    output_file_.close();
+}
+
 
 void SteppingAction::UserSteppingAction(const G4Step *step)
 {
@@ -67,7 +77,7 @@ void SteppingAction::UserSteppingAction(const G4Step *step)
             G4cout << "##### DETECTED: " << detector_name << G4endl;
 
             G4ThreeVector position = step -> GetPostStepPoint()->GetPosition();
-            G4cout << position << G4endl;
+            output_file_ << position.x() << ", " << position.y() << std::endl;
         }
     }
 

@@ -3,7 +3,7 @@
 
 #include "G4UserSteppingAction.hh"
 #include "globals.hh"
-#include <map>
+#include <fstream>
 
 class G4LogicalVolume;
 
@@ -15,10 +15,13 @@ class SteppingAction : public G4UserSteppingAction
 {
 public:
   SteppingAction();
-  ~SteppingAction() override = default;
+  ~SteppingAction();
 
   // method from the base class
   void UserSteppingAction(const G4Step *) override;
+
+private:
+  std::ofstream output_file_;
 };
 
 #endif
